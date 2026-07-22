@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Award, Ear, GraduationCap, Heart, RefreshCw, ShieldCheck, Sparkles, UserRound } from "lucide-react";
+import { Award, BookOpen, BriefcaseBusiness, Ear, FileText, GraduationCap, PlayCircle, RefreshCw, Sparkles } from "lucide-react";
 import dr1Url from "@/assets/dr-1.webp";
 import dr2Url from "@/assets/dr-2.png";
 import dr5Url from "@/assets/dr-5.webp";
@@ -94,10 +94,10 @@ export const Route = createFileRoute("/")({
           "@type": "MedicalBusiness",
           name: "Dra. Silvana Kennedy — Estética Avançada",
           image: drKennedy.url,
-          telephone: "+55 44 9943-5050",
+          telephone: "+55 44 99943-5050",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "R. Antônio Felipe, 1620 - Zona 1",
+            streetAddress: "R. Antônio Felipe, 1620 - Centro",
             addressLocality: "Paranavaí",
             addressRegion: "PR",
             postalCode: "87704-030",
@@ -112,8 +112,8 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WA_NUMBER = "554499435050";
-const WA_DISPLAY = "(44) 9943-5050";
+const WA_NUMBER = "5544999435050";
+const WA_DISPLAY = "(44) 99943-5050";
 const IG_URL = "https://www.instagram.com/doutorakennedy/";
 const WA = `https://wa.me/${WA_NUMBER}`;
 const waLink = (msg: string) => `${WA}?text=${encodeURIComponent(msg)}`;
@@ -243,9 +243,7 @@ function Index() {
             <li><a href="#earshutt" onClick={closeMenu}>Otomodelação</a></li>
             <li><a href="#procedimentos" onClick={closeMenu}>Procedimentos</a></li>
             <li><a href="#resultados" onClick={closeMenu}>Resultados</a></li>
-            <li><a href="#depoimentos" onClick={closeMenu}>Depoimentos</a></li>
             <li><a href="#contato" onClick={closeMenu}>Contato</a></li>
-            <li><a href="#localizacao" onClick={closeMenu}>Localização</a></li>
           </ul>
           <a href={waLink("Olá, gostaria de agendar uma avaliação.")} className="nav-cta">Agendar</a>
           <button className={"burger" + (menuOpen ? " open" : "")} aria-label="Menu" onClick={() => setMenuOpen(!menuOpen)}>
@@ -322,6 +320,7 @@ function Index() {
             <span className="eyebrow">Sobre</span>
             <h2>Dra. Silvana Kennedy</h2>
             <p>A Dra. Silvana Kennedy une conhecimento técnico, olhar estético refinado e atendimento humanizado para entregar resultados naturais, seguros e alinhados à individualidade de cada paciente.</p>
+            <p>Com uma trajetória construída sobre o cuidado, a dedicação e a busca constante por aperfeiçoamento, Dra. Silvana Kennedy reúne experiência clínica e formação multidisciplinar para oferecer tratamentos seguros, personalizados e naturais.</p>
             <ul className="about-credentials">
               <li>Especialista em Harmonização Facial</li>
               <li>Referência em Otomodelação Earshutt</li>
@@ -337,22 +336,22 @@ function Index() {
       <section id="formacao">
         <div className="wrap qualification-grid">
           <div className="qualification-heading reveal">
-            <span className="eyebrow">Formação e Especializações</span>
-            <h2>Conhecimento que sustenta cada escolha</h2>
-            <p>Uma trajetória dedicada à estética avançada, com formação multidisciplinar e aperfeiçoamento contínuo para oferecer condutas seguras e individualizadas.</p>
+            <span className="eyebrow">Formação e experiência</span>
+            <h2>Conhecimento construído para cuidar de cada detalhe</h2>
+            <p>Uma trajetória multidisciplinar, marcada pela atualização constante e pelo compromisso com procedimentos seguros, personalizados e naturais.</p>
           </div>
           <div className="qualification-cards reveal delay-1">
             {[
-              [GraduationCap, "Enfermagem", "Formação em saúde que orienta um cuidado atento e responsável."],
-              [Award, "Biomedicina Estética", "Conhecimento especializado aplicado aos procedimentos estéticos avançados."],
-              [Sparkles, "Harmonização Facial", "Especialização voltada ao equilíbrio das proporções e à naturalidade."],
-              [Ear, "Otomodelação Earshutt", "Experiência técnica em um dos procedimentos de referência da clínica."],
-              [RefreshCw, "Atualização contínua", "Aperfeiçoamento constante de técnicas, protocolos e tecnologias."],
-            ].map(([Icon, h, p]) => (
-              <article className="qualification-card" key={h as string}>
+              { icon: GraduationCap, title: "Enfermagem — UNIMAR", text: "Base sólida no cuidado, segurança e acompanhamento de cada paciente." },
+              { icon: Award, title: "Biomedicina — UNINGÁ", text: "Formação direcionada à estética avançada e aos tratamentos individualizados." },
+              { icon: BookOpen, title: "Podiatria Clínica — Anhembi Morumbi", text: "Conhecimento ampliado sobre saúde, atendimento clínico e cuidado integral." },
+              { icon: Sparkles, title: "Residências em Harmonização Facial e Corporal", text: "Aperfeiçoamento prático em técnicas avançadas, planejamento e naturalidade." },
+              { icon: RefreshCw, title: "Especializações em Enfermagem e Biomedicina Estética", text: "Atualização contínua para oferecer segurança, precisão e resultados equilibrados." },
+            ].map(({ icon: Icon, title, text }) => (
+              <article className="qualification-card" key={title}>
                 <Icon aria-hidden="true" />
-                <h3>{h as string}</h3>
-                <p>{p as string}</p>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </article>
             ))}
           </div>
@@ -418,16 +417,15 @@ function Index() {
           </div>
           <div className="choice-grid reveal">
             {[
-              [Sparkles, "Resultados naturais", "Planejamento para valorizar seus traços sem apagar características pessoais."],
-              [UserRound, "Atendimento personalizado", "Escuta cuidadosa e protocolos definidos para necessidades individuais."],
-              [ShieldCheck, "Segurança", "Condutas responsáveis e orientação clara em todas as etapas do cuidado."],
-              [Heart, "Acompanhamento", "Atenção presente antes, durante e após cada procedimento realizado."],
-              [Award, "Experiência", "Conhecimento técnico aliado a um olhar estético refinado e humanizado."],
-            ].map(([Icon, h, p], index) => (
-              <article className="choice-card" key={h as string}>
-                <div className="choice-top"><Icon aria-hidden="true" /><span className="choice-num">{String(index + 1).padStart(2, "0")}</span></div>
-                <h3>{h as string}</h3>
-                <p>{p as string}</p>
+              ["01", "Escuta individual", "Cada atendimento começa com uma conversa cuidadosa sobre necessidades e expectativas."],
+              ["02", "Resultados naturais", "Planejamento orientado a valorizar a beleza sem apagar características pessoais."],
+              ["03", "Conduta personalizada", "Protocolos definidos de acordo com a avaliação e o momento de cada paciente."],
+              ["04", "Cuidado contínuo", "Orientação clara antes, durante e após cada procedimento realizado."],
+            ].map(([n, h, p]) => (
+              <article className="choice-card" key={n}>
+                <span className="choice-num">{n}</span>
+                <h3>{h}</h3>
+                <p>{p}</p>
               </article>
             ))}
           </div>
@@ -436,44 +434,37 @@ function Index() {
 
       {/* Estrutura da Clínica */}
       <section id="estrutura">
-        <div className="wrap">
+        <div className="wrap clinic-grid">
           <div className="clinic-intro reveal">
             <span className="eyebrow on-dark">Estrutura da Clínica</span>
             <h2>Um espaço preparado para acolher você</h2>
             <p>Da chegada ao pós-procedimento, cada detalhe foi pensado para proporcionar uma experiência tranquila, reservada e cuidadosa.</p>
             <a href={waLink("Olá, gostaria de conhecer a estrutura da clínica e agendar uma avaliação.")} className="btn btn-outline">Conhecer a clínica</a>
           </div>
-          <div className="clinic-gallery reveal delay-1" aria-label="Galeria da estrutura da clínica">
+          <div className="clinic-features reveal delay-1">
             {[
-              ["01", "Recepção", "Um primeiro contato acolhedor e discreto."],
-              ["02", "Sala de atendimento", "Privacidade para uma avaliação individualizada."],
-              ["03", "Ambiente clínico", "Cuidado e organização em cada detalhe."],
+              ["I", "Atendimento reservado", "Privacidade e atenção individual em todas as etapas."],
+              ["II", "Ambiente acolhedor", "Conforto e bem-estar desde o primeiro contato."],
+              ["III", "Cuidado em cada detalhe", "Uma experiência organizada para que você se sinta segura."],
+              ["IV", "Localização acessível", "Estrutura em região central de Paranavaí-PR."],
             ].map(([n, h, p]) => (
-              <figure className="clinic-gallery-item" key={n}>
-                <div className="clinic-photo-placeholder" role="img" aria-label={`Espaço reservado para foto: ${h}`}>
-                  <span>{n}</span>
-                  <small>Foto da clínica</small>
+              <article className="clinic-feature" key={n}>
+                <span className="clinic-num">{n}</span>
+                <div>
+                  <h3>{h}</h3>
+                  <p>{p}</p>
                 </div>
-                <figcaption><strong>{h}</strong><span>{p}</span></figcaption>
-              </figure>
+              </article>
             ))}
           </div>
-          <p className="clinic-gallery-note reveal">Galeria preparada para receber fotografias reais da clínica.</p>
         </div>
       </section>
 
       {/* Resultados */}
       <section id="resultados">
         <div className="results-shell reveal">
-          <div className="results-heading">
-            <div>
-              <span className="eyebrow">Resultados reais</span>
-              <h2>Naturalidade que respeita a sua essência</h2>
-            </div>
-            <p>Uma seleção de antes e depois para apresentar resultados reais, sempre com autorização e respeitando a individualidade de cada paciente.</p>
-          </div>
           <div className="results-topline">
-            <span className="results-label">Galeria de antes e depois</span>
+            <span className="eyebrow">Resultados</span>
             <span className="results-count">{String(resultSlide + 1).padStart(2, "0")} / {String(resultSlides.length).padStart(2, "0")}</span>
           </div>
 
@@ -520,21 +511,58 @@ function Index() {
           </div>
           <div className="proof-grid reveal">
             {[
-              { quote: "Atendimento cuidadoso do início ao fim. Resultado super natural, exatamente o que eu esperava.", name: "Paciente verificada", procedure: "Harmonização facial", initials: "PV", photo: null as string | null },
-              { quote: "Profissionalismo e técnica impecáveis. Me senti segura em cada etapa do procedimento.", name: "Paciente verificada", procedure: "Preenchimento labial", initials: "PV", photo: null as string | null },
-              { quote: "A Otomodelação mudou minha autoestima. Recomendo de olhos fechados.", name: "Paciente verificada", procedure: "Otomodelação Earshutt", initials: "PV", photo: null as string | null },
-            ].map(({ quote, name, procedure, initials, photo }) => (
-              <div className="proof-card" key={procedure}>
+              ["Atendimento cuidadoso do início ao fim. Resultado super natural, exatamente o que eu esperava.", "Paciente verificada · Google"],
+              ["Profissionalismo e técnica impecáveis. Me senti segura em cada etapa do procedimento.", "Paciente verificada · Google"],
+              ["A Otomodelação mudou minha autoestima. Recomendo de olhos fechados.", "Paciente verificada · Google"],
+            ].map(([q, n]) => (
+              <div className="proof-card" key={q}>
                 <div className="stars">★★★★★</div>
-                <p>"{quote}"</p>
-                <div className="proof-patient">
-                  {photo ? <img src={photo} alt={`Foto de ${name}`} /> : <span className="proof-avatar" aria-label="Foto não disponível">{initials}</span>}
-                  <div><strong>{name}</strong><small>{procedure} · Google</small></div>
-                </div>
+                <p>"{q}"</p>
+                <div className="proof-name">{n}</div>
               </div>
             ))}
           </div>
           <p className="disclaimer">Resultados individuais podem variar. Imagens de antes/depois utilizadas mediante autorização da paciente. Avaliações reais de pacientes atendidas na clínica.</p>
+        </div>
+      </section>
+
+      {/* Cursos e mentorias */}
+      <section id="mentorias">
+        <div className="wrap mentorship-shell reveal">
+          <div className="mentorship-copy">
+            <span className="eyebrow">Para profissionais</span>
+            <h2>Conhecimento que também transforma carreiras</h2>
+            <p>Além dos atendimentos clínicos, Dra. Silvana Kennedy compartilha sua experiência por meio de cursos e mentorias voltados a profissionais que desejam aperfeiçoar suas técnicas, ampliar sua segurança e elevar o nível dos seus resultados.</p>
+          </div>
+          <div className="mentorship-options">
+            <div><Ear aria-hidden="true" /><span>Mentoria em Otomodelação</span></div>
+            <div><Sparkles aria-hidden="true" /><span>Mentoria em Toxina Botulínica</span></div>
+          </div>
+          <a href={waLink("Olá! Gostaria de receber informações sobre os cursos e mentorias da Dra. Kennedy.")} className="btn btn-outline on-light">Conhecer cursos e mentorias</a>
+        </div>
+      </section>
+
+      {/* Conteúdo educativo */}
+      <section id="conteudos">
+        <div className="wrap">
+          <div className="section-head reveal">
+            <span className="eyebrow">Conteúdo e orientação</span>
+            <h2>Informação para escolher com segurança</h2>
+          </div>
+          <div className="content-grid reveal">
+            {[
+              { icon: BookOpen, title: "Dúvidas frequentes", text: "Respostas claras sobre procedimentos, cuidados e recuperação." },
+              { icon: PlayCircle, title: "Vídeos da Dra. Kennedy", text: "Explicações profissionais sobre estética, beleza e harmonização." },
+              { icon: FileText, title: "Cuidados e orientações", text: "Informações importantes para antes e depois dos procedimentos." },
+            ].map(({ icon: Icon, title, text }) => (
+              <a className="content-card" href={IG_URL} target="_blank" rel="noreferrer" key={title}>
+                <Icon aria-hidden="true" />
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <span>Ver no Instagram →</span>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -550,10 +578,11 @@ function Index() {
           </div>
           <ol className="service-steps reveal">
             {[
-              ["01", "Agendamento", "Fale com a equipe pelo WhatsApp e escolha o melhor momento para você."],
+              ["01", "Primeiro contato", "Fale com a equipe pelo WhatsApp e conte o que deseja cuidar."],
               ["02", "Avaliação individual", "A Dra. Silvana analisa suas necessidades, proporções e expectativas."],
-              ["03", "Procedimento", "O atendimento acontece com atenção ao conforto, à segurança e à naturalidade."],
-              ["04", "Pós-atendimento", "Você recebe orientações e acompanhamento após o procedimento."],
+              ["03", "Plano personalizado", "As possibilidades são apresentadas com clareza e definidas em conjunto."],
+              ["04", "Procedimento", "O atendimento acontece com atenção ao conforto, à segurança e à naturalidade."],
+              ["05", "Acompanhamento", "Você recebe as orientações necessárias para o período pós-procedimento."],
             ].map(([n, h, p]) => (
               <li className="service-step" key={n}>
                 <span>{n}</span>
@@ -603,14 +632,14 @@ function Index() {
           <div className="location-text reveal">
             <span className="eyebrow">Localização</span>
             <h2>Onde estamos</h2>
-            <address>R. Antônio Felipe, 1620 – Zona 1<br />Paranavaí – PR, 87704-030</address>
+            <address>R. Antônio Felipe, 1620 – Centro<br />Paranavaí – PR, 87704-030</address>
             <div className="location-actions">
-              <a className="btn btn-outline on-light" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=R.+Ant%C3%B4nio+Felipe%2C+1620+-+Zona+1%2C+Paranava%C3%AD+-+PR%2C+87704-030">Ver no Google Maps</a>
+              <a className="btn btn-outline on-light" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=R.+Ant%C3%B4nio+Felipe%2C+1620+-+Centro%2C+Paranava%C3%AD+-+PR%2C+87704-030">Ver no Google Maps</a>
               <a className="btn btn-outline on-light" target="_blank" rel="noreferrer" href="https://waze.com/ul?q=R.%20Ant%C3%B4nio%20Felipe%2C%201620%2C%20Paranava%C3%AD%20-%20PR">Traçar rota pelo Waze</a>
             </div>
           </div>
           <div className="map-frame reveal delay-1">
-            <iframe title="Mapa" src="https://www.google.com/maps?q=R.+Ant%C3%B4nio+Felipe,+1620,+Paranava%C3%AD+-+PR,+87704-030&output=embed" width="100%" height="100%" style={{ border: 0, filter: "grayscale(1) contrast(1.05)" }} loading="lazy"></iframe>
+            <iframe title="Mapa" src="https://www.google.com/maps?q=R.+Ant%C3%B4nio+Felipe,+1620,+Centro,+Paranava%C3%AD+-+PR,+87704-030&output=embed" width="100%" height="100%" style={{ border: 0, filter: "grayscale(1) contrast(1.05)" }} loading="lazy"></iframe>
           </div>
         </div>
       </section>
@@ -636,15 +665,19 @@ function Index() {
             <div className="footer-col">
               <h4>Navegação</h4>
               <a href="#sobre">Sobre</a>
+              <a href="#formacao">Formação</a>
               <a href="#procedimentos">Procedimentos</a>
               <a href="#estrutura">Estrutura da Clínica</a>
+              <a href="#mentorias">Cursos e mentorias</a>
+              <a href="#conteudos">Conteúdos</a>
               <a href="#localizacao">Localização</a>
             </div>
             <div className="footer-col">
               <h4>Contato</h4>
               <a href={WA} target="_blank" rel="noreferrer" className="footer-inline"><img src={iconWhatsapp.url} alt="" />{WA_DISPLAY}</a>
               <a href={IG_URL} target="_blank" rel="noreferrer" className="footer-inline"><img src={iconInstagram.url} alt="" />@doutorakennedy</a>
-              <p>R. Antônio Felipe, 1620 – Paranavaí, PR</p>
+              <p>R. Antônio Felipe, 1620 – Centro · Paranavaí, PR</p>
+              <a href={waLink("Olá! Gostaria de enviar meu currículo para a Clínica Dra. Kennedy.")} target="_blank" rel="noreferrer" className="footer-careers"><BriefcaseBusiness aria-hidden="true" />Trabalhe conosco · Envie seu currículo</a>
             </div>
           </div>
           <div className="footer-bottom">
@@ -751,6 +784,8 @@ h1,h2,h3,h4{
 
 .footer-inline{display:flex !important;align-items:center;gap:10px;}
 .footer-inline img{width:18px;height:18px;filter:brightness(1.1);}
+.footer-careers{display:flex !important;align-items:center;gap:10px;margin-top:18px;}
+.footer-careers svg{width:16px;height:16px;color:var(--gold);stroke-width:1.4;flex-shrink:0;}
 @keyframes curtainIn{0%{opacity:0;transform:translateY(14px);}45%{opacity:1;transform:translateY(0);}100%{opacity:1;transform:translateY(0);}}
 
 /* Header */
@@ -940,62 +975,44 @@ section{padding:130px 0;}
 
 /* Por que escolher */
 #diferenciais{background:var(--white);}
-.choice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
   background:var(--hairline);border:1px solid var(--hairline);}
-.choice-card{background:var(--white);padding:34px 24px;min-height:300px;
+.choice-card{background:var(--white);padding:38px 28px;min-height:280px;
   transition:background .4s var(--ease);}
 .choice-card:hover{background:var(--warm-white);}
-.choice-top{display:flex;align-items:center;justify-content:space-between;}
-.choice-top svg{width:22px;height:22px;color:var(--gold);stroke-width:1.3;}
 .choice-num{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:600;}
 .choice-card h3{font-size:24px;font-weight:500;line-height:1.2;margin-top:44px;}
 .choice-card p{margin-top:15px;color:var(--grey-text);font-size:13.5px;font-weight:300;line-height:1.7;}
-@media (max-width:1000px){.choice-grid{grid-template-columns:1fr 1fr;}.choice-card:last-child{grid-column:1/-1;}}
+@media (max-width:900px){.choice-grid{grid-template-columns:1fr 1fr;}}
 @media (max-width:560px){.choice-grid{grid-template-columns:1fr;}.choice-card{min-height:auto;}}
 
 /* Estrutura da Clínica */
 #estrutura{background:var(--graphite);color:var(--warm-white);position:relative;overflow:hidden;}
 #estrutura::before{content:'';position:absolute;right:-15%;top:-45%;width:620px;height:620px;
   border:1px solid rgba(240,191,76,.12);border-radius:50%;pointer-events:none;}
-.clinic-intro{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px 80px;
-  align-items:end;margin-bottom:64px;}
+.clinic-grid{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;gap:90px;align-items:center;}
 .clinic-intro .eyebrow{display:block;margin-bottom:20px;}
-.clinic-intro h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);grid-column:1;}
-.clinic-intro p{grid-column:2;grid-row:1/3;max-width:470px;color:rgba(248,247,244,.72);font-size:16px;
+.clinic-intro h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);}
+.clinic-intro p{margin-top:24px;max-width:470px;color:rgba(248,247,244,.72);font-size:16px;
   font-weight:300;line-height:1.85;}
-.clinic-intro .btn{grid-column:1;width:max-content;margin-top:14px;}
-.clinic-gallery{position:relative;display:grid;grid-template-columns:1.15fr .85fr;grid-template-rows:260px 260px;gap:18px;}
-.clinic-gallery-item{position:relative;overflow:hidden;border:1px solid var(--hairline-dark);}
-.clinic-gallery-item:first-child{grid-row:1/3;}
-.clinic-photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:12px;background:linear-gradient(135deg,rgba(248,247,244,.08),rgba(248,247,244,.015));
-  transition:transform .7s var(--ease),background .5s var(--ease);}
-.clinic-gallery-item:hover .clinic-photo-placeholder{transform:scale(1.025);background:rgba(248,247,244,.1);}
-.clinic-photo-placeholder span{font-family:'Cormorant Garamond',serif;font-size:46px;font-style:italic;
-  color:rgba(240,191,76,.55);font-weight:300;}
-.clinic-photo-placeholder small{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(248,247,244,.38);}
-.clinic-gallery-item figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px;
-  background:linear-gradient(transparent,rgba(11,11,12,.88));display:flex;flex-direction:column;}
-.clinic-gallery-item figcaption strong{font-family:'Cormorant Garamond',serif;font-size:23px;color:var(--warm-white);font-weight:500;}
-.clinic-gallery-item figcaption span{font-size:11.5px;color:rgba(248,247,244,.62);font-weight:300;margin-top:3px;}
-.clinic-gallery-note{margin-top:18px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(248,247,244,.4);text-align:right;}
+.clinic-intro .btn{margin-top:38px;}
+.clinic-features{border-top:1px solid var(--hairline-dark);}
+.clinic-feature{display:grid;grid-template-columns:48px 1fr;gap:24px;padding:30px 0;
+  border-bottom:1px solid var(--hairline-dark);transition:padding-left .35s var(--ease);}
+.clinic-feature:hover{padding-left:12px;}
+.clinic-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
+  letter-spacing:.12em;color:var(--gold);padding-top:5px;}
+.clinic-feature h3{font-size:24px;font-weight:500;line-height:1.2;color:var(--warm-white);}
+.clinic-feature p{margin-top:8px;color:rgba(248,247,244,.62);font-size:13.5px;font-weight:300;line-height:1.65;}
 @media (max-width:860px){
-  .clinic-intro{grid-template-columns:1fr;gap:20px;}
-  .clinic-intro p,.clinic-intro .btn{grid-column:1;grid-row:auto;}
-  .clinic-gallery{grid-template-columns:1fr;grid-template-rows:360px 240px 240px;}
-  .clinic-gallery-item:first-child{grid-row:auto;}
+  .clinic-grid{grid-template-columns:1fr;gap:52px;}
   #estrutura::before{right:-70%;top:-20%;}
 }
 
 /* Resultados */
 #resultados{padding:110px 5%;background:var(--warm-white);}
 .results-shell{width:100%;max-width:1220px;margin:0 auto;}
-.results-heading{display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:end;margin-bottom:62px;}
-.results-heading .eyebrow{display:block;margin-bottom:18px;}
-.results-heading h2{font-size:clamp(32px,4vw,52px);line-height:1.12;}
-.results-heading>p{color:var(--grey-text);font-size:14.5px;font-weight:300;line-height:1.8;}
 .results-topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
-.results-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-text);}
 .results-count{font-size:10px;letter-spacing:.2em;color:var(--grey-text);}
 .results-stage{position:relative;min-height:720px;background:var(--graphite-deep);overflow:hidden;}
 .result-slide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(340px,.7fr);
@@ -1022,7 +1039,6 @@ section{padding:130px 0;}
 .result-dots button.active{width:52px;background:var(--gold);}
 @media (max-width:860px){
   #resultados{padding:76px 20px;}
-  .results-heading{grid-template-columns:1fr;gap:22px;margin-bottom:46px;}
   .results-stage{min-height:780px;}
   .result-slide{grid-template-columns:1fr;grid-template-rows:minmax(0,72%) minmax(190px,28%);}
   .result-info{padding:32px 28px;}
@@ -1045,20 +1061,40 @@ section{padding:130px 0;}
 #depoimentos{background:var(--white);}
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
   background:var(--hairline);border:1px solid var(--hairline);margin-bottom:60px;}
-.proof-card{background:var(--white);padding:40px 34px;display:flex;flex-direction:column;}
+.proof-card{background:var(--white);padding:40px 34px;}
 .stars{color:var(--gold);font-size:13px;letter-spacing:3px;margin-bottom:20px;}
 .proof-card p{font-size:15.5px;color:var(--grey-text);font-weight:300;font-style:italic;line-height:1.75;
   font-family:'Cormorant Garamond',serif;font-size:20px;}
-.proof-patient{display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:28px;}
-.proof-patient img,.proof-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;}
-.proof-avatar{display:flex;align-items:center;justify-content:center;background:var(--graphite);color:var(--gold);
-  font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.08em;}
-.proof-patient div{display:flex;flex-direction:column;gap:3px;}
-.proof-patient strong{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--graphite);}
-.proof-patient small{font-size:11px;color:var(--grey-mid);font-weight:300;}
+.proof-name{margin-top:24px;font-size:11.5px;letter-spacing:0.12em;
+  text-transform:uppercase;font-weight:700;color:var(--graphite);}
 @media (max-width:860px){.proof-grid{grid-template-columns:1fr;}}
 .disclaimer{font-size:12px;color:var(--grey-mid);font-weight:300;max-width:640px;margin:0 auto;
   text-align:center;line-height:1.7;padding-top:24px;border-top:1px solid var(--hairline);}
+
+/* Cursos e mentorias */
+#mentorias{background:var(--warm-white);padding:90px 0;}
+.mentorship-shell{display:grid;grid-template-columns:1.15fr .85fr;gap:50px 80px;align-items:end;}
+.mentorship-copy .eyebrow{display:block;margin-bottom:18px;}
+.mentorship-copy h2{font-size:clamp(30px,3.6vw,46px);line-height:1.14;}
+.mentorship-copy p{margin-top:20px;color:var(--grey-text);font-size:14.5px;font-weight:300;line-height:1.8;max-width:680px;}
+.mentorship-options{border-top:1px solid var(--hairline);}
+.mentorship-options div{display:flex;align-items:center;gap:16px;padding:20px 0;border-bottom:1px solid var(--hairline);}
+.mentorship-options svg{width:20px;height:20px;color:var(--gold);stroke-width:1.3;}
+.mentorship-options span{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--graphite);}
+.mentorship-shell>.btn{grid-column:1/-1;width:max-content;}
+@media (max-width:820px){.mentorship-shell{grid-template-columns:1fr;gap:36px;}}
+
+/* Conteúdo educativo */
+#conteudos{background:var(--white);}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);}
+.content-card{background:var(--white);padding:36px 30px;min-height:290px;display:flex;flex-direction:column;
+  transition:background .4s var(--ease);}
+.content-card:hover{background:var(--warm-white);}
+.content-card svg{width:23px;height:23px;color:var(--gold);stroke-width:1.3;}
+.content-card h3{font-size:25px;font-weight:500;line-height:1.2;margin-top:42px;}
+.content-card p{margin-top:14px;color:var(--grey-text);font-size:13.5px;font-weight:300;line-height:1.7;}
+.content-card>span{margin-top:auto;padding-top:26px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;}
+@media (max-width:760px){.content-grid{grid-template-columns:1fr;}.content-card{min-height:auto;}}
 
 /* Como funciona o atendimento */
 #atendimento{background:var(--graphite-deep);color:var(--warm-white);}
@@ -1066,7 +1102,7 @@ section{padding:130px 0;}
 .service-heading .eyebrow{display:block;margin-bottom:18px;}
 .service-heading h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);}
 .service-heading>p{color:rgba(248,247,244,.68);font-size:15px;font-weight:300;line-height:1.8;}
-.service-steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hairline-dark);
+.service-steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hairline-dark);
   border-bottom:1px solid var(--hairline-dark);}
 .service-step{padding:30px 24px 34px;border-right:1px solid var(--hairline-dark);}
 .service-step:last-child{border-right:0;}
