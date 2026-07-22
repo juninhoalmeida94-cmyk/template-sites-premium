@@ -87,9 +87,11 @@ export function SectionTransitionCanvas() {
     let disposed = false;
     let animationFrame = 0;
     let visible = !document.hidden;
-    let scrollProgress = 0;
-    let renderedProgress = 0;
-    let transitionOpacity = 0;
+    let sequencePhase = 0;
+    let renderedPhase = 0;
+    let sequenceActive = 0;
+    let renderedActive = 0;
+    let activeTransition = -1;
     let anchors: number[] = [];
     let cleanupThree: (() => void) | undefined;
 
@@ -164,17 +166,23 @@ export function SectionTransitionCanvas() {
       const updateScroll = () => {
         if (!anchors.length) return;
         const focus = window.scrollY + window.innerHeight * 0.58;
-        const lastIndex = anchors.length - 1;
-        let segment = 0;
+        const lead = window.innerHeight * 0.92;
+        const trail = window.innerHeight * 0.58;
+        const activeIndex = anchors.findIndex((anchor) => focus >= anchor - lead && focus <= anchor + trail);
 
-        while (segment < lastIndex && focus > anchors[segment + 1]) segment += 1;
+        if (activeIndex === -1) {
+          sequenceActive = 0;
+          return;
+        }
 
-        const start = segment === 0 ? anchors[0] - window.innerHeight : anchors[segment];
-        const end = segment === lastIndex ? anchors[lastIndex] + window.innerHeight : anchors[segment + 1];
-        scrollProgress = clamp(segment + smoothstep((focus - start) / Math.max(end - start, 1)), 0, lastIndex);
-
-        const nearestDistance = Math.min(...anchors.map((anchor) => Math.abs(focus - anchor)));
-        transitionOpacity = 1 - smoothstep(nearestDistance / (window.innerHeight * 0.95));
+        const activeAnchor = anchors[activeIndex];
+        sequencePhase = clamp((focus - (activeAnchor - lead)) / (lead + trail));
+        if (activeTransition !== activeIndex) {
+          activeTransition = activeIndex;
+          renderedPhase = sequencePhase;
+          renderedActive = 0;
+        }
+        sequenceActive = 1;
       };
 
       const resize = () => {
@@ -196,10 +204,43 @@ export function SectionTransitionCanvas() {
 
       const render = (time: number) => {
         if (!visible || disposed) return;
-        renderedProgress += (scrollProgress - renderedProgress) * 0.035;
-        const fromShape = Math.floor(renderedProgress);
-        const toShape = Math.min(fromShape + 1, TRANSITION_TARGETS.length - 1);
-        const mix = smoothstep(renderedProgress - fromShape);
+        renderedPhase += (sequencePhase - renderedPhase) * 0.055;
+        renderedActive += (sequenceActive - renderedActive) * 0.045;
+
+        const phase = clamp(renderedPhase);
+        let fromShape = 2;
+        let toShape = 2;
+        let mix = 0;
+        let lineStage = 0;
+
+        if (phase < 0.12) {
+          lineStage = smoothstep(phase / 0.12);
+        } else if (phase < 0.38) {
+          toShape = 0;
+          mix = smoothstep((phase - 0.12) / 0.26);
+          lineStage = 1;
+        } else if (phase < 0.52) {
+          fromShape = 0;
+          toShape = 0;
+          lineStage = 1;
+        } else if (phase < 0.68) {
+          fromShape = 0;
+          toShape = 1;
+          mix = smoothstep((phase - 0.52) / 0.32);
+          lineStage = 1 - smoothstep((phase - 0.52) / 0.16);
+        } else if (phase < 0.84) {
+          fromShape = 0;
+          toShape = 1;
+          mix = smoothstep((phase - 0.52) / 0.32);
+          lineStage = smoothstep((phase - 0.68) / 0.16);
+        } else {
+          fromShape = 1;
+          toShape = 1;
+          lineStage = phase < 0.94 ? 1 : 1 - smoothstep((phase - 0.94) / 0.06);
+        }
+
+        const particleStage = smoothstep(clamp((phase - 0.5) / 0.13)) *
+          (1 - smoothstep(clamp((phase - 0.72) / 0.13)));
         const drift = Math.sin(time * 0.00018) * (mobile ? 0.006 : 0.012);
 
         for (let index = 0; index < POINT_COUNT; index += 1) {
@@ -221,9 +262,9 @@ export function SectionTransitionCanvas() {
         particlePositionAttribute.needsUpdate = true;
         particleGeometry.setDrawRange(0, particleCount);
 
-        const opacity = transitionOpacity * (mobile ? 0.12 : 0.2);
-        lineMaterial.opacity = opacity;
-        particleMaterial.opacity = opacity * (0.3 + Math.max(0, 1 - Math.abs(renderedProgress - 3)) * 0.5);
+        const opacity = renderedActive * (mobile ? 0.12 : 0.2);
+        lineMaterial.opacity = opacity * lineStage;
+        particleMaterial.opacity = opacity * particleStage * 0.9;
         renderer.render(scene, camera);
         animationFrame = window.requestAnimationFrame(render);
       };
