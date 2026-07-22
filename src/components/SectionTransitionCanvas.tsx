@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const TRANSITION_TARGETS = ["sobre", "formacao", "procedimentos", "depoimentos", "final-cta"];
+const TRANSITION_MOTIFS = ["face", "ear", "particles", "face", "ear"] as const;
 const POINT_COUNT = 84;
 
 type ShapePoint = { x: number; y: number };
@@ -179,8 +180,8 @@ export function SectionTransitionCanvas() {
       const updateScroll = () => {
         if (!anchors.length) return;
         const focus = window.scrollY + window.innerHeight * 0.58;
-        const lead = window.innerHeight * 0.92;
-        const trail = window.innerHeight * 0.58;
+        const lead = window.innerHeight * 0.68;
+        const trail = window.innerHeight * 0.44;
         const activeIndex = anchors.findIndex((anchor) => focus >= anchor - lead && focus <= anchor + trail);
 
         if (activeIndex === -1) {
@@ -217,10 +218,12 @@ export function SectionTransitionCanvas() {
 
       const render = (time: number) => {
         if (!visible || disposed) return;
-        renderedPhase += (sequencePhase - renderedPhase) * 0.055;
-        renderedActive += (sequenceActive - renderedActive) * 0.045;
+        renderedPhase += (sequencePhase - renderedPhase) * 0.04;
+        renderedActive += (sequenceActive - renderedActive) * 0.035;
 
         const phase = clamp(renderedPhase);
+        const motif = TRANSITION_MOTIFS[activeTransition] ?? "face";
+        const motifShape = motif === "face" ? 0 : motif === "ear" ? 1 : 2;
         let fromShape = 2;
         let toShape = 2;
         let mix = 0;
@@ -228,40 +231,35 @@ export function SectionTransitionCanvas() {
         let drawStart = 0;
         let drawCount = POINT_COUNT;
 
-        if (phase < 0.12) {
-          lineStage = smoothstep(phase / 0.12);
-          drawCount = Math.max(2, Math.round(POINT_COUNT * smoothstep(phase / 0.12)));
-        } else if (phase < 0.38) {
-          toShape = 0;
-          mix = smoothstep((phase - 0.12) / 0.26);
+        if (phase < 0.16) {
+          lineStage = smoothstep(phase / 0.16);
+          drawCount = Math.max(2, Math.round(POINT_COUNT * smoothstep(phase / 0.16)));
+        } else if (phase < 0.56) {
+          toShape = motifShape;
+          mix = smoothstep((phase - 0.16) / 0.4);
           lineStage = 1;
-        } else if (phase < 0.52) {
-          fromShape = 0;
-          toShape = 0;
+        } else if (phase < 0.7) {
+          fromShape = motifShape;
+          toShape = motifShape;
           lineStage = 1;
-        } else if (phase < 0.68) {
-          fromShape = 0;
-          toShape = 1;
-          mix = smoothstep((phase - 0.52) / 0.32);
-          lineStage = 1 - smoothstep((phase - 0.52) / 0.16);
-          drawStart = Math.round(POINT_COUNT * smoothstep((phase - 0.52) / 0.16) * 0.88);
+        } else if (phase < 0.9) {
+          fromShape = motifShape;
+          toShape = motifShape;
+          lineStage = 1 - smoothstep((phase - 0.7) / 0.2);
+          drawStart = Math.round(POINT_COUNT * smoothstep((phase - 0.7) / 0.2) * 0.88);
           drawCount = Math.max(2, POINT_COUNT - drawStart);
-        } else if (phase < 0.84) {
-          fromShape = 0;
-          toShape = 1;
-          mix = smoothstep((phase - 0.52) / 0.32);
-          lineStage = smoothstep((phase - 0.68) / 0.16);
-          drawCount = Math.max(2, Math.round(POINT_COUNT * smoothstep((phase - 0.68) / 0.16)));
         } else {
-          fromShape = 1;
-          toShape = 1;
-          lineStage = phase < 0.94 ? 1 : 1 - smoothstep((phase - 0.94) / 0.06);
+          fromShape = motifShape;
+          toShape = motifShape;
+          lineStage = 0;
         }
 
         lineGeometry.setDrawRange(drawStart, drawCount);
 
-        const particleStage = smoothstep(clamp((phase - 0.5) / 0.13)) *
-          (1 - smoothstep(clamp((phase - 0.72) / 0.13)));
+        const particleStage = motif === "particles"
+          ? smoothstep(clamp((phase - 0.42) / 0.16)) *
+            (1 - smoothstep(clamp((phase - 0.78) / 0.16)))
+          : 0;
         const drift = Math.sin(time * 0.00018) * (mobile ? 0.006 : 0.012);
         const scrollTravel = (0.5 - phase) * (mobile ? 0.08 : 0.16);
         const dissolveSpread = particleStage * (mobile ? 0.035 : 0.065);
@@ -271,12 +269,15 @@ export function SectionTransitionCanvas() {
           const from = shapePoint(fromShape, t);
           const to = shapePoint(toShape, t);
           const x = (from.x + (to.x - from.x) * mix) * aspect + drift;
+          const handDrawn =
+            Math.sin(t * Math.PI * 13 + activeTransition * 1.7) * 0.0018 +
+            Math.sin(t * Math.PI * 29 + activeTransition) * 0.0007;
           const y =
             from.y +
             (to.y - from.y) * mix +
             scrollTravel +
-            Math.sin(t * Math.PI * 4 + time * 0.00012) * 0.004;
-          linePositions[index * 3] = x;
+            Math.sin(t * Math.PI * 4 + time * 0.00008) * 0.0025;
+          linePositions[index * 3] = x + handDrawn;
           linePositions[index * 3 + 1] = y;
         }
         linePositionAttribute.needsUpdate = true;
@@ -291,9 +292,9 @@ export function SectionTransitionCanvas() {
         particlePositionAttribute.needsUpdate = true;
         particleGeometry.setDrawRange(0, particleCount);
 
-        const opacity = renderedActive * (mobile ? 0.12 : 0.2);
+        const opacity = renderedActive * (mobile ? 0.07 : 0.13);
         lineMaterial.opacity = opacity * lineStage;
-        particleMaterial.opacity = opacity * particleStage * 0.9;
+        particleMaterial.opacity = opacity * particleStage * 0.75;
         renderer.render(scene, camera);
         animationFrame = window.requestAnimationFrame(render);
       };
