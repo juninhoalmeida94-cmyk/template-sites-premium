@@ -332,6 +332,34 @@ function Index() {
         </div>
       </section>
 
+      {/* Formação e Especializações */}
+      <section id="formacao">
+        <div className="wrap qualification-grid">
+          <div className="qualification-heading reveal">
+            <span className="eyebrow">Formação e Especializações</span>
+            <h2>Conhecimento que sustenta cada escolha</h2>
+            <p>Uma trajetória dedicada à estética avançada, com formação multidisciplinar e aperfeiçoamento contínuo para oferecer condutas seguras e individualizadas.</p>
+          </div>
+          <div className="qualification-list reveal delay-1">
+            {[
+              ["I", "Enfermagem", "Formação em saúde que orienta um cuidado atento e responsável."],
+              ["II", "Biomedicina Estética", "Conhecimento especializado aplicado aos procedimentos estéticos avançados."],
+              ["III", "Harmonização Facial", "Especialização voltada ao equilíbrio das proporções e à naturalidade."],
+              ["IV", "Otomodelação Earshutt", "Experiência técnica em um dos procedimentos de referência da clínica."],
+              ["V", "Atualização contínua", "Aperfeiçoamento constante de técnicas, protocolos e tecnologias."],
+            ].map(([n, h, p]) => (
+              <article className="qualification-item" key={n}>
+                <span>{n}</span>
+                <div>
+                  <h3>{h}</h3>
+                  <p>{p}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Earshutt */}
       <section id="earshutt">
         <div className="wrap earshutt-grid">
@@ -377,6 +405,31 @@ function Index() {
             {tab === "facial" && <ProcList items={facial} />}
             {tab === "pele" && <ProcList items={pele} />}
             {tab === "corporal" && <ProcList items={corporal} />}
+          </div>
+        </div>
+      </section>
+
+      {/* Por que escolher */}
+      <section id="diferenciais">
+        <div className="wrap">
+          <div className="section-head center reveal">
+            <span className="eyebrow">Por que escolher a Dra. Silvana</span>
+            <h2>Técnica e sensibilidade em equilíbrio</h2>
+            <p>Uma experiência construída para respeitar seus traços, seus objetivos e o seu tempo.</p>
+          </div>
+          <div className="choice-grid reveal">
+            {[
+              ["01", "Escuta individual", "Cada atendimento começa com uma conversa cuidadosa sobre necessidades e expectativas."],
+              ["02", "Resultados naturais", "Planejamento orientado a valorizar a beleza sem apagar características pessoais."],
+              ["03", "Conduta personalizada", "Protocolos definidos de acordo com a avaliação e o momento de cada paciente."],
+              ["04", "Cuidado contínuo", "Orientação clara antes, durante e após cada procedimento realizado."],
+            ].map(([n, h, p]) => (
+              <article className="choice-card" key={n}>
+                <span className="choice-num">{n}</span>
+                <h3>{h}</h3>
+                <p>{p}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -472,6 +525,37 @@ function Index() {
             ))}
           </div>
           <p className="disclaimer">Resultados individuais podem variar. Imagens de antes/depois utilizadas mediante autorização da paciente. Avaliações reais de pacientes atendidas na clínica.</p>
+        </div>
+      </section>
+
+      {/* Como funciona o atendimento */}
+      <section id="atendimento">
+        <div className="wrap">
+          <div className="service-heading reveal">
+            <div>
+              <span className="eyebrow">Como funciona o atendimento</span>
+              <h2>Uma jornada simples, cuidadosa e personalizada</h2>
+            </div>
+            <p>Você recebe orientação em cada etapa, da primeira conversa ao acompanhamento após o procedimento.</p>
+          </div>
+          <ol className="service-steps reveal">
+            {[
+              ["01", "Primeiro contato", "Fale com a equipe pelo WhatsApp e conte o que deseja cuidar."],
+              ["02", "Avaliação individual", "A Dra. Silvana analisa suas necessidades, proporções e expectativas."],
+              ["03", "Plano personalizado", "As possibilidades são apresentadas com clareza e definidas em conjunto."],
+              ["04", "Procedimento", "O atendimento acontece com atenção ao conforto, à segurança e à naturalidade."],
+              ["05", "Acompanhamento", "Você recebe as orientações necessárias para o período pós-procedimento."],
+            ].map(([n, h, p]) => (
+              <li className="service-step" key={n}>
+                <span>{n}</span>
+                <h3>{h}</h3>
+                <p>{p}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="service-action reveal">
+            <a href={waLink("Olá, gostaria de entender como funciona o atendimento e agendar uma avaliação.")} className="btn btn-solid gold">Iniciar atendimento</a>
+          </div>
         </div>
       </section>
 
@@ -780,6 +864,25 @@ section{padding:130px 0;}
 .about-text .btn{margin-top:38px;}
 @media (max-width:860px){.about-grid{grid-template-columns:1fr;gap:44px;}}
 
+/* Formação e Especializações */
+#formacao{background:var(--warm-white);}
+.qualification-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:90px;align-items:start;}
+.qualification-heading{position:sticky;top:120px;}
+.qualification-heading .eyebrow{display:block;margin-bottom:18px;}
+.qualification-heading h2{font-size:clamp(32px,3.8vw,50px);line-height:1.14;}
+.qualification-heading p{margin-top:22px;color:var(--grey-text);font-size:16px;font-weight:300;line-height:1.8;}
+.qualification-list{border-top:1px solid var(--hairline);}
+.qualification-item{display:grid;grid-template-columns:48px 1fr;gap:22px;padding:27px 0;
+  border-bottom:1px solid var(--hairline);}
+.qualification-item>span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
+  letter-spacing:.12em;color:var(--gold);padding-top:5px;}
+.qualification-item h3{font-size:24px;font-weight:500;line-height:1.2;}
+.qualification-item p{margin-top:8px;color:var(--grey-text);font-size:13.5px;font-weight:300;line-height:1.65;}
+@media (max-width:860px){
+  .qualification-grid{grid-template-columns:1fr;gap:44px;}
+  .qualification-heading{position:static;}
+}
+
 /* Earshutt */
 #earshutt{background:var(--graphite);color:var(--warm-white);position:relative;overflow:hidden;}
 #earshutt h2{color:var(--warm-white);}
@@ -822,6 +925,19 @@ section{padding:130px 0;}
   .proc-item{grid-template-columns:1fr auto;}
   .proc-desc{grid-column:1/-1;}
 }
+
+/* Por que escolher */
+#diferenciais{background:var(--white);}
+.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--hairline);border:1px solid var(--hairline);}
+.choice-card{background:var(--white);padding:38px 28px;min-height:280px;
+  transition:background .4s var(--ease);}
+.choice-card:hover{background:var(--warm-white);}
+.choice-num{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:600;}
+.choice-card h3{font-size:24px;font-weight:500;line-height:1.2;margin-top:44px;}
+.choice-card p{margin-top:15px;color:var(--grey-text);font-size:13.5px;font-weight:300;line-height:1.7;}
+@media (max-width:900px){.choice-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.choice-grid{grid-template-columns:1fr;}.choice-card{min-height:auto;}}
 
 /* Estrutura da Clínica */
 #estrutura{background:var(--graphite);color:var(--warm-white);position:relative;overflow:hidden;}
@@ -907,6 +1023,31 @@ section{padding:130px 0;}
 @media (max-width:860px){.proof-grid{grid-template-columns:1fr;}}
 .disclaimer{font-size:12px;color:var(--grey-mid);font-weight:300;max-width:640px;margin:0 auto;
   text-align:center;line-height:1.7;padding-top:24px;border-top:1px solid var(--hairline);}
+
+/* Como funciona o atendimento */
+#atendimento{background:var(--graphite-deep);color:var(--warm-white);}
+.service-heading{display:grid;grid-template-columns:1.3fr .7fr;gap:80px;align-items:end;margin-bottom:70px;}
+.service-heading .eyebrow{display:block;margin-bottom:18px;}
+.service-heading h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);}
+.service-heading>p{color:rgba(248,247,244,.68);font-size:15px;font-weight:300;line-height:1.8;}
+.service-steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hairline-dark);
+  border-bottom:1px solid var(--hairline-dark);}
+.service-step{padding:30px 24px 34px;border-right:1px solid var(--hairline-dark);}
+.service-step:last-child{border-right:0;}
+.service-step>span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
+  letter-spacing:.12em;color:var(--gold);}
+.service-step h3{margin-top:36px;color:var(--warm-white);font-size:22px;font-weight:500;line-height:1.2;}
+.service-step p{margin-top:14px;color:rgba(248,247,244,.62);font-size:12.5px;font-weight:300;line-height:1.7;}
+.service-action{text-align:center;margin-top:48px;}
+@media (max-width:900px){
+  .service-heading{grid-template-columns:1fr;gap:24px;margin-bottom:50px;}
+  .service-steps{grid-template-columns:1fr;}
+  .service-step{display:grid;grid-template-columns:42px 1fr;gap:4px 18px;border-right:0;
+    border-bottom:1px solid var(--hairline-dark);}
+  .service-step:last-child{border-bottom:0;}
+  .service-step h3{margin-top:0;}
+  .service-step p{grid-column:2;}
+}
 
 /* Location */
 #localizacao{background:var(--warm-white);}
