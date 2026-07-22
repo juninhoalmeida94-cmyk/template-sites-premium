@@ -514,9 +514,9 @@ function Index() {
           </div>
           <div className="proof-grid reveal">
             {[
-              ["Atendimento cuidadoso do início ao fim. Resultado super natural, exatamente o que eu esperava.", "Paciente verificada · Google"],
-              ["Profissionalismo e técnica impecáveis. Me senti segura em cada etapa do procedimento.", "Paciente verificada · Google"],
-              ["A Otomodelação mudou minha autoestima. Recomendo de olhos fechados.", "Paciente verificada · Google"],
+              ["Atendimento cuidadoso do início ao fim. Resultado super natural, exatamente o que eu esperava.", "Relato ilustrativo"],
+              ["Profissionalismo e técnica impecáveis. Me senti segura em cada etapa do procedimento.", "Relato ilustrativo"],
+              ["A Otomodelação mudou minha autoestima. Recomendo de olhos fechados.", "Relato ilustrativo"],
             ].map(([q, n]) => (
               <div className="proof-card" key={q}>
                 <div className="stars">★★★★★</div>
