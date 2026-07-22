@@ -256,12 +256,13 @@ function Index() {
       <section id="hero">
         <div className="hero-inner">
           <div className="hero-copy">
-            <span className="eyebrow reveal">Harmonização Facial · Paranavaí-PR</span>
+            <span className="eyebrow reveal">HARMONIZAÇÃO FACIAL • PARANAVAÍ • PR</span>
             <h1 className="reveal delay-1">
-              Referência em <em>Otomodelação Earshutt</em> e Harmonização Facial em Paranavaí
+              A beleza mais elegante é aquela que continua sendo você.
             </h1>
             <p className="hero-sub reveal delay-2">
-              Tratamentos personalizados para realçar sua beleza com naturalidade, segurança e sofisticação.
+              Procedimentos personalizados para valorizar seus traços com naturalidade, segurança e sofisticação.<br />
+              <span className="result-kicker">Especialista em Otomodelação Earshutt®</span>
             </p>
             <div className="hero-actions reveal delay-3">
               <a href={waLink("Olá, gostaria de agendar uma avaliação.")} className="btn btn-solid gold">Agendar avaliação</a>
