@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Award, BookOpen, BriefcaseBusiness, Ear, FileText, GraduationCap, PlayCircle, RefreshCw, Sparkles } from "lucide-react";
+import { SectionTransitionCanvas } from "@/components/SectionTransitionCanvas";
 import dr1Url from "@/assets/dr-1.webp";
 import dr2Url from "@/assets/dr-2.png";
 import dr5Url from "@/assets/dr-5.webp";
@@ -224,6 +225,7 @@ function Index() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <SectionTransitionCanvas />
 
       <div id="curtain" className={curtainHide ? "hide" : ""}>
         <div className="curtain-inner">
