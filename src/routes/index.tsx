@@ -381,6 +381,34 @@ function Index() {
         </div>
       </section>
 
+      {/* Estrutura da Clínica */}
+      <section id="estrutura">
+        <div className="wrap clinic-grid">
+          <div className="clinic-intro reveal">
+            <span className="eyebrow on-dark">Estrutura da Clínica</span>
+            <h2>Um espaço preparado para acolher você</h2>
+            <p>Da chegada ao pós-procedimento, cada detalhe foi pensado para proporcionar uma experiência tranquila, reservada e cuidadosa.</p>
+            <a href={waLink("Olá, gostaria de conhecer a estrutura da clínica e agendar uma avaliação.")} className="btn btn-outline">Conhecer a clínica</a>
+          </div>
+          <div className="clinic-features reveal delay-1">
+            {[
+              ["I", "Atendimento reservado", "Privacidade e atenção individual em todas as etapas."],
+              ["II", "Ambiente acolhedor", "Conforto e bem-estar desde o primeiro contato."],
+              ["III", "Cuidado em cada detalhe", "Uma experiência organizada para que você se sinta segura."],
+              ["IV", "Localização acessível", "Estrutura em região central de Paranavaí-PR."],
+            ].map(([n, h, p]) => (
+              <article className="clinic-feature" key={n}>
+                <span className="clinic-num">{n}</span>
+                <div>
+                  <h3>{h}</h3>
+                  <p>{p}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Resultados */}
       <section id="resultados">
         <div className="results-shell reveal">
@@ -516,6 +544,7 @@ function Index() {
               <h4>Navegação</h4>
               <a href="#sobre">Sobre</a>
               <a href="#procedimentos">Procedimentos</a>
+              <a href="#estrutura">Estrutura da Clínica</a>
               <a href="#localizacao">Localização</a>
             </div>
             <div className="footer-col">
@@ -792,6 +821,29 @@ section{padding:130px 0;}
 @media (max-width:760px){
   .proc-item{grid-template-columns:1fr auto;}
   .proc-desc{grid-column:1/-1;}
+}
+
+/* Estrutura da Clínica */
+#estrutura{background:var(--graphite);color:var(--warm-white);position:relative;overflow:hidden;}
+#estrutura::before{content:'';position:absolute;right:-15%;top:-45%;width:620px;height:620px;
+  border:1px solid rgba(240,191,76,.12);border-radius:50%;pointer-events:none;}
+.clinic-grid{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;gap:90px;align-items:center;}
+.clinic-intro .eyebrow{display:block;margin-bottom:20px;}
+.clinic-intro h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);}
+.clinic-intro p{margin-top:24px;max-width:470px;color:rgba(248,247,244,.72);font-size:16px;
+  font-weight:300;line-height:1.85;}
+.clinic-intro .btn{margin-top:38px;}
+.clinic-features{border-top:1px solid var(--hairline-dark);}
+.clinic-feature{display:grid;grid-template-columns:48px 1fr;gap:24px;padding:30px 0;
+  border-bottom:1px solid var(--hairline-dark);transition:padding-left .35s var(--ease);}
+.clinic-feature:hover{padding-left:12px;}
+.clinic-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
+  letter-spacing:.12em;color:var(--gold);padding-top:5px;}
+.clinic-feature h3{font-size:24px;font-weight:500;line-height:1.2;color:var(--warm-white);}
+.clinic-feature p{margin-top:8px;color:rgba(248,247,244,.62);font-size:13.5px;font-weight:300;line-height:1.65;}
+@media (max-width:860px){
+  .clinic-grid{grid-template-columns:1fr;gap:52px;}
+  #estrutura::before{right:-70%;top:-20%;}
 }
 
 /* Resultados */
