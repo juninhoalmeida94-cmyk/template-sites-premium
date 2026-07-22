@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Award, Ear, GraduationCap, Heart, RefreshCw, ShieldCheck, Sparkles, UserRound } from "lucide-react";
 import dr1Url from "@/assets/dr-1.webp";
 import dr2Url from "@/assets/dr-2.png";
 import dr5Url from "@/assets/dr-5.webp";
@@ -340,20 +341,18 @@ function Index() {
             <h2>Conhecimento que sustenta cada escolha</h2>
             <p>Uma trajetória dedicada à estética avançada, com formação multidisciplinar e aperfeiçoamento contínuo para oferecer condutas seguras e individualizadas.</p>
           </div>
-          <div className="qualification-list reveal delay-1">
+          <div className="qualification-cards reveal delay-1">
             {[
-              ["I", "Enfermagem", "Formação em saúde que orienta um cuidado atento e responsável."],
-              ["II", "Biomedicina Estética", "Conhecimento especializado aplicado aos procedimentos estéticos avançados."],
-              ["III", "Harmonização Facial", "Especialização voltada ao equilíbrio das proporções e à naturalidade."],
-              ["IV", "Otomodelação Earshutt", "Experiência técnica em um dos procedimentos de referência da clínica."],
-              ["V", "Atualização contínua", "Aperfeiçoamento constante de técnicas, protocolos e tecnologias."],
-            ].map(([n, h, p]) => (
-              <article className="qualification-item" key={n}>
-                <span>{n}</span>
-                <div>
-                  <h3>{h}</h3>
-                  <p>{p}</p>
-                </div>
+              [GraduationCap, "Enfermagem", "Formação em saúde que orienta um cuidado atento e responsável."],
+              [Award, "Biomedicina Estética", "Conhecimento especializado aplicado aos procedimentos estéticos avançados."],
+              [Sparkles, "Harmonização Facial", "Especialização voltada ao equilíbrio das proporções e à naturalidade."],
+              [Ear, "Otomodelação Earshutt", "Experiência técnica em um dos procedimentos de referência da clínica."],
+              [RefreshCw, "Atualização contínua", "Aperfeiçoamento constante de técnicas, protocolos e tecnologias."],
+            ].map(([Icon, h, p]) => (
+              <article className="qualification-card" key={h as string}>
+                <Icon aria-hidden="true" />
+                <h3>{h as string}</h3>
+                <p>{p as string}</p>
               </article>
             ))}
           </div>
@@ -419,15 +418,16 @@ function Index() {
           </div>
           <div className="choice-grid reveal">
             {[
-              ["01", "Escuta individual", "Cada atendimento começa com uma conversa cuidadosa sobre necessidades e expectativas."],
-              ["02", "Resultados naturais", "Planejamento orientado a valorizar a beleza sem apagar características pessoais."],
-              ["03", "Conduta personalizada", "Protocolos definidos de acordo com a avaliação e o momento de cada paciente."],
-              ["04", "Cuidado contínuo", "Orientação clara antes, durante e após cada procedimento realizado."],
-            ].map(([n, h, p]) => (
-              <article className="choice-card" key={n}>
-                <span className="choice-num">{n}</span>
-                <h3>{h}</h3>
-                <p>{p}</p>
+              [Sparkles, "Resultados naturais", "Planejamento para valorizar seus traços sem apagar características pessoais."],
+              [UserRound, "Atendimento personalizado", "Escuta cuidadosa e protocolos definidos para necessidades individuais."],
+              [ShieldCheck, "Segurança", "Condutas responsáveis e orientação clara em todas as etapas do cuidado."],
+              [Heart, "Acompanhamento", "Atenção presente antes, durante e após cada procedimento realizado."],
+              [Award, "Experiência", "Conhecimento técnico aliado a um olhar estético refinado e humanizado."],
+            ].map(([Icon, h, p], index) => (
+              <article className="choice-card" key={h as string}>
+                <div className="choice-top"><Icon aria-hidden="true" /><span className="choice-num">{String(index + 1).padStart(2, "0")}</span></div>
+                <h3>{h as string}</h3>
+                <p>{p as string}</p>
               </article>
             ))}
           </div>
@@ -436,37 +436,44 @@ function Index() {
 
       {/* Estrutura da Clínica */}
       <section id="estrutura">
-        <div className="wrap clinic-grid">
+        <div className="wrap">
           <div className="clinic-intro reveal">
             <span className="eyebrow on-dark">Estrutura da Clínica</span>
             <h2>Um espaço preparado para acolher você</h2>
             <p>Da chegada ao pós-procedimento, cada detalhe foi pensado para proporcionar uma experiência tranquila, reservada e cuidadosa.</p>
             <a href={waLink("Olá, gostaria de conhecer a estrutura da clínica e agendar uma avaliação.")} className="btn btn-outline">Conhecer a clínica</a>
           </div>
-          <div className="clinic-features reveal delay-1">
+          <div className="clinic-gallery reveal delay-1" aria-label="Galeria da estrutura da clínica">
             {[
-              ["I", "Atendimento reservado", "Privacidade e atenção individual em todas as etapas."],
-              ["II", "Ambiente acolhedor", "Conforto e bem-estar desde o primeiro contato."],
-              ["III", "Cuidado em cada detalhe", "Uma experiência organizada para que você se sinta segura."],
-              ["IV", "Localização acessível", "Estrutura em região central de Paranavaí-PR."],
+              ["01", "Recepção", "Um primeiro contato acolhedor e discreto."],
+              ["02", "Sala de atendimento", "Privacidade para uma avaliação individualizada."],
+              ["03", "Ambiente clínico", "Cuidado e organização em cada detalhe."],
             ].map(([n, h, p]) => (
-              <article className="clinic-feature" key={n}>
-                <span className="clinic-num">{n}</span>
-                <div>
-                  <h3>{h}</h3>
-                  <p>{p}</p>
+              <figure className="clinic-gallery-item" key={n}>
+                <div className="clinic-photo-placeholder" role="img" aria-label={`Espaço reservado para foto: ${h}`}>
+                  <span>{n}</span>
+                  <small>Foto da clínica</small>
                 </div>
-              </article>
+                <figcaption><strong>{h}</strong><span>{p}</span></figcaption>
+              </figure>
             ))}
           </div>
+          <p className="clinic-gallery-note reveal">Galeria preparada para receber fotografias reais da clínica.</p>
         </div>
       </section>
 
       {/* Resultados */}
       <section id="resultados">
         <div className="results-shell reveal">
+          <div className="results-heading">
+            <div>
+              <span className="eyebrow">Resultados reais</span>
+              <h2>Naturalidade que respeita a sua essência</h2>
+            </div>
+            <p>Uma seleção de antes e depois para apresentar resultados reais, sempre com autorização e respeitando a individualidade de cada paciente.</p>
+          </div>
           <div className="results-topline">
-            <span className="eyebrow">Resultados</span>
+            <span className="results-label">Galeria de antes e depois</span>
             <span className="results-count">{String(resultSlide + 1).padStart(2, "0")} / {String(resultSlides.length).padStart(2, "0")}</span>
           </div>
 
@@ -513,14 +520,17 @@ function Index() {
           </div>
           <div className="proof-grid reveal">
             {[
-              ["Atendimento cuidadoso do início ao fim. Resultado super natural, exatamente o que eu esperava.", "Paciente verificada · Google"],
-              ["Profissionalismo e técnica impecáveis. Me senti segura em cada etapa do procedimento.", "Paciente verificada · Google"],
-              ["A Otomodelação mudou minha autoestima. Recomendo de olhos fechados.", "Paciente verificada · Google"],
-            ].map(([q, n]) => (
-              <div className="proof-card" key={n}>
+              { quote: "Atendimento cuidadoso do início ao fim. Resultado super natural, exatamente o que eu esperava.", name: "Paciente verificada", procedure: "Harmonização facial", initials: "PV", photo: null as string | null },
+              { quote: "Profissionalismo e técnica impecáveis. Me senti segura em cada etapa do procedimento.", name: "Paciente verificada", procedure: "Preenchimento labial", initials: "PV", photo: null as string | null },
+              { quote: "A Otomodelação mudou minha autoestima. Recomendo de olhos fechados.", name: "Paciente verificada", procedure: "Otomodelação Earshutt", initials: "PV", photo: null as string | null },
+            ].map(({ quote, name, procedure, initials, photo }) => (
+              <div className="proof-card" key={procedure}>
                 <div className="stars">★★★★★</div>
-                <p>"{q}"</p>
-                <div className="proof-name">{n}</div>
+                <p>"{quote}"</p>
+                <div className="proof-patient">
+                  {photo ? <img src={photo} alt={`Foto de ${name}`} /> : <span className="proof-avatar" aria-label="Foto não disponível">{initials}</span>}
+                  <div><strong>{name}</strong><small>{procedure} · Google</small></div>
+                </div>
               </div>
             ))}
           </div>
@@ -540,11 +550,10 @@ function Index() {
           </div>
           <ol className="service-steps reveal">
             {[
-              ["01", "Primeiro contato", "Fale com a equipe pelo WhatsApp e conte o que deseja cuidar."],
+              ["01", "Agendamento", "Fale com a equipe pelo WhatsApp e escolha o melhor momento para você."],
               ["02", "Avaliação individual", "A Dra. Silvana analisa suas necessidades, proporções e expectativas."],
-              ["03", "Plano personalizado", "As possibilidades são apresentadas com clareza e definidas em conjunto."],
-              ["04", "Procedimento", "O atendimento acontece com atenção ao conforto, à segurança e à naturalidade."],
-              ["05", "Acompanhamento", "Você recebe as orientações necessárias para o período pós-procedimento."],
+              ["03", "Procedimento", "O atendimento acontece com atenção ao conforto, à segurança e à naturalidade."],
+              ["04", "Pós-atendimento", "Você recebe orientações e acompanhamento após o procedimento."],
             ].map(([n, h, p]) => (
               <li className="service-step" key={n}>
                 <span>{n}</span>
@@ -871,17 +880,20 @@ section{padding:130px 0;}
 .qualification-heading .eyebrow{display:block;margin-bottom:18px;}
 .qualification-heading h2{font-size:clamp(32px,3.8vw,50px);line-height:1.14;}
 .qualification-heading p{margin-top:22px;color:var(--grey-text);font-size:16px;font-weight:300;line-height:1.8;}
-.qualification-list{border-top:1px solid var(--hairline);}
-.qualification-item{display:grid;grid-template-columns:48px 1fr;gap:22px;padding:27px 0;
-  border-bottom:1px solid var(--hairline);}
-.qualification-item>span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
-  letter-spacing:.12em;color:var(--gold);padding-top:5px;}
-.qualification-item h3{font-size:24px;font-weight:500;line-height:1.2;}
-.qualification-item p{margin-top:8px;color:var(--grey-text);font-size:13.5px;font-weight:300;line-height:1.65;}
+.qualification-cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--hairline);border:1px solid var(--hairline);}
+.qualification-card{background:var(--warm-white);padding:32px 28px;min-height:225px;
+  transition:background .4s var(--ease),transform .4s var(--ease);}
+.qualification-card:last-child{grid-column:1/-1;min-height:auto;}
+.qualification-card:hover{background:var(--white);transform:translateY(-3px);}
+.qualification-card svg{width:24px;height:24px;color:var(--gold);stroke-width:1.3;}
+.qualification-card h3{font-size:23px;font-weight:500;line-height:1.2;margin-top:34px;}
+.qualification-card p{margin-top:10px;color:var(--grey-text);font-size:13px;font-weight:300;line-height:1.65;}
 @media (max-width:860px){
   .qualification-grid{grid-template-columns:1fr;gap:44px;}
   .qualification-heading{position:static;}
 }
+@media (max-width:520px){.qualification-cards{grid-template-columns:1fr;}.qualification-card:last-child{grid-column:auto;}}
 
 /* Earshutt */
 #earshutt{background:var(--graphite);color:var(--warm-white);position:relative;overflow:hidden;}
@@ -928,44 +940,62 @@ section{padding:130px 0;}
 
 /* Por que escolher */
 #diferenciais{background:var(--white);}
-.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+.choice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
   background:var(--hairline);border:1px solid var(--hairline);}
-.choice-card{background:var(--white);padding:38px 28px;min-height:280px;
+.choice-card{background:var(--white);padding:34px 24px;min-height:300px;
   transition:background .4s var(--ease);}
 .choice-card:hover{background:var(--warm-white);}
+.choice-top{display:flex;align-items:center;justify-content:space-between;}
+.choice-top svg{width:22px;height:22px;color:var(--gold);stroke-width:1.3;}
 .choice-num{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:600;}
 .choice-card h3{font-size:24px;font-weight:500;line-height:1.2;margin-top:44px;}
 .choice-card p{margin-top:15px;color:var(--grey-text);font-size:13.5px;font-weight:300;line-height:1.7;}
-@media (max-width:900px){.choice-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:1000px){.choice-grid{grid-template-columns:1fr 1fr;}.choice-card:last-child{grid-column:1/-1;}}
 @media (max-width:560px){.choice-grid{grid-template-columns:1fr;}.choice-card{min-height:auto;}}
 
 /* Estrutura da Clínica */
 #estrutura{background:var(--graphite);color:var(--warm-white);position:relative;overflow:hidden;}
 #estrutura::before{content:'';position:absolute;right:-15%;top:-45%;width:620px;height:620px;
   border:1px solid rgba(240,191,76,.12);border-radius:50%;pointer-events:none;}
-.clinic-grid{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;gap:90px;align-items:center;}
+.clinic-intro{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px 80px;
+  align-items:end;margin-bottom:64px;}
 .clinic-intro .eyebrow{display:block;margin-bottom:20px;}
-.clinic-intro h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);}
-.clinic-intro p{margin-top:24px;max-width:470px;color:rgba(248,247,244,.72);font-size:16px;
+.clinic-intro h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);grid-column:1;}
+.clinic-intro p{grid-column:2;grid-row:1/3;max-width:470px;color:rgba(248,247,244,.72);font-size:16px;
   font-weight:300;line-height:1.85;}
-.clinic-intro .btn{margin-top:38px;}
-.clinic-features{border-top:1px solid var(--hairline-dark);}
-.clinic-feature{display:grid;grid-template-columns:48px 1fr;gap:24px;padding:30px 0;
-  border-bottom:1px solid var(--hairline-dark);transition:padding-left .35s var(--ease);}
-.clinic-feature:hover{padding-left:12px;}
-.clinic-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
-  letter-spacing:.12em;color:var(--gold);padding-top:5px;}
-.clinic-feature h3{font-size:24px;font-weight:500;line-height:1.2;color:var(--warm-white);}
-.clinic-feature p{margin-top:8px;color:rgba(248,247,244,.62);font-size:13.5px;font-weight:300;line-height:1.65;}
+.clinic-intro .btn{grid-column:1;width:max-content;margin-top:14px;}
+.clinic-gallery{position:relative;display:grid;grid-template-columns:1.15fr .85fr;grid-template-rows:260px 260px;gap:18px;}
+.clinic-gallery-item{position:relative;overflow:hidden;border:1px solid var(--hairline-dark);}
+.clinic-gallery-item:first-child{grid-row:1/3;}
+.clinic-photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;background:linear-gradient(135deg,rgba(248,247,244,.08),rgba(248,247,244,.015));
+  transition:transform .7s var(--ease),background .5s var(--ease);}
+.clinic-gallery-item:hover .clinic-photo-placeholder{transform:scale(1.025);background:rgba(248,247,244,.1);}
+.clinic-photo-placeholder span{font-family:'Cormorant Garamond',serif;font-size:46px;font-style:italic;
+  color:rgba(240,191,76,.55);font-weight:300;}
+.clinic-photo-placeholder small{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(248,247,244,.38);}
+.clinic-gallery-item figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px;
+  background:linear-gradient(transparent,rgba(11,11,12,.88));display:flex;flex-direction:column;}
+.clinic-gallery-item figcaption strong{font-family:'Cormorant Garamond',serif;font-size:23px;color:var(--warm-white);font-weight:500;}
+.clinic-gallery-item figcaption span{font-size:11.5px;color:rgba(248,247,244,.62);font-weight:300;margin-top:3px;}
+.clinic-gallery-note{margin-top:18px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(248,247,244,.4);text-align:right;}
 @media (max-width:860px){
-  .clinic-grid{grid-template-columns:1fr;gap:52px;}
+  .clinic-intro{grid-template-columns:1fr;gap:20px;}
+  .clinic-intro p,.clinic-intro .btn{grid-column:1;grid-row:auto;}
+  .clinic-gallery{grid-template-columns:1fr;grid-template-rows:360px 240px 240px;}
+  .clinic-gallery-item:first-child{grid-row:auto;}
   #estrutura::before{right:-70%;top:-20%;}
 }
 
 /* Resultados */
 #resultados{padding:110px 5%;background:var(--warm-white);}
 .results-shell{width:100%;max-width:1220px;margin:0 auto;}
+.results-heading{display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:end;margin-bottom:62px;}
+.results-heading .eyebrow{display:block;margin-bottom:18px;}
+.results-heading h2{font-size:clamp(32px,4vw,52px);line-height:1.12;}
+.results-heading>p{color:var(--grey-text);font-size:14.5px;font-weight:300;line-height:1.8;}
 .results-topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.results-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-text);}
 .results-count{font-size:10px;letter-spacing:.2em;color:var(--grey-text);}
 .results-stage{position:relative;min-height:720px;background:var(--graphite-deep);overflow:hidden;}
 .result-slide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(340px,.7fr);
@@ -992,6 +1022,7 @@ section{padding:130px 0;}
 .result-dots button.active{width:52px;background:var(--gold);}
 @media (max-width:860px){
   #resultados{padding:76px 20px;}
+  .results-heading{grid-template-columns:1fr;gap:22px;margin-bottom:46px;}
   .results-stage{min-height:780px;}
   .result-slide{grid-template-columns:1fr;grid-template-rows:minmax(0,72%) minmax(190px,28%);}
   .result-info{padding:32px 28px;}
@@ -1014,12 +1045,17 @@ section{padding:130px 0;}
 #depoimentos{background:var(--white);}
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
   background:var(--hairline);border:1px solid var(--hairline);margin-bottom:60px;}
-.proof-card{background:var(--white);padding:40px 34px;}
+.proof-card{background:var(--white);padding:40px 34px;display:flex;flex-direction:column;}
 .stars{color:var(--gold);font-size:13px;letter-spacing:3px;margin-bottom:20px;}
 .proof-card p{font-size:15.5px;color:var(--grey-text);font-weight:300;font-style:italic;line-height:1.75;
   font-family:'Cormorant Garamond',serif;font-size:20px;}
-.proof-name{margin-top:24px;font-size:11.5px;letter-spacing:0.12em;
-  text-transform:uppercase;font-weight:700;color:var(--graphite);}
+.proof-patient{display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:28px;}
+.proof-patient img,.proof-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.proof-avatar{display:flex;align-items:center;justify-content:center;background:var(--graphite);color:var(--gold);
+  font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.08em;}
+.proof-patient div{display:flex;flex-direction:column;gap:3px;}
+.proof-patient strong{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--graphite);}
+.proof-patient small{font-size:11px;color:var(--grey-mid);font-weight:300;}
 @media (max-width:860px){.proof-grid{grid-template-columns:1fr;}}
 .disclaimer{font-size:12px;color:var(--grey-mid);font-weight:300;max-width:640px;margin:0 auto;
   text-align:center;line-height:1.7;padding-top:24px;border-top:1px solid var(--hairline);}
@@ -1030,7 +1066,7 @@ section{padding:130px 0;}
 .service-heading .eyebrow{display:block;margin-bottom:18px;}
 .service-heading h2{font-size:clamp(32px,4vw,52px);line-height:1.12;color:var(--warm-white);}
 .service-heading>p{color:rgba(248,247,244,.68);font-size:15px;font-weight:300;line-height:1.8;}
-.service-steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hairline-dark);
+.service-steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hairline-dark);
   border-bottom:1px solid var(--hairline-dark);}
 .service-step{padding:30px 24px 34px;border-right:1px solid var(--hairline-dark);}
 .service-step:last-child{border-right:0;}
